@@ -49,6 +49,7 @@ export async function updateProperty(req, res) {
     res.status(500).json({ message: "Error updating property", error });
   }
 }
+
 export async function deleteProperty(req, res) {
   try {
     const propertyId = req.params.id;
