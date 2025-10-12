@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     role: {
       type: String,
-      enum: ["SUPER_ADMIN", "ADMIN", "EMPLOYEE", "GATE"],
+      enum: ["SUPER_ADMIN", "ADMIN", "EMPLOYEE"],
       default: "EMPLOYEE",
     }, 
     isActive: { type: Boolean, default: true }, // لتحديد ما إذا كان المستخدم نشطًا أم لا

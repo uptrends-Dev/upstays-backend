@@ -4,7 +4,8 @@ dotenv.config();
 import databaseConnection from './config/databaseConnection.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-
+// import propertyRoutes from './routes/propertyRoutes.js';
+import propertyRoutes from './routes/propertyRoutes.js';
 const Port = process.env.PORT || 3001;
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ databaseConnection();
 //routes
 app.use('/api/auth' , authRoutes);
 app.use('/api/user' , userRoutes);
+app.use('/api/property' , propertyRoutes);
 app.listen(Port , ()=>{
     console.log(`server is running on port ${Port}`);
 })
