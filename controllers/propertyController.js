@@ -4,24 +4,62 @@ export async function createProperty(req, res) {
     const propertyData = req.body;
     const newProperty = new Property(propertyData);
     await newProperty.save();
-    res
-      .status(201)
-      .json({
-        message: "Property created successfully",
-        property: newProperty,
-      });
+    res.status(201).json({
+      message: "Property created successfully",
+      property: newProperty,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error creating property", error });
   }
 }
 export async function getAllProperties(req, res) {
+  const { location, priceRange, tag } = req.query;
   try {
-    const properties = await Property.find();
-    res.status(200).json(properties);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const sortOrder = req.query.sort === "asc" ? 1 : -1;
+    let filter = {};
+
+    // Filter by location (country, city, or address)
+    if (location) {
+      const locationRegex = { $regex: location, $options: "i" };
+      filter["location.country"] = locationRegex;
+      filter["location.city"] = locationRegex;
+    }
+
+      // Filter by price range
+    if (priceRange) {
+      const [min, max] = priceRange.split("-").map(Number);
+      if (!isNaN(min) && !isNaN(max)) {
+        filter["propertyPricing.priceValue"] = { $gte: min, $lte: max };
+      }
+    }
+
+    // Filter by tag
+    if (tag) {
+      filter.tag = tag;
+    }
+    const total = await Property.countDocuments(filter);
+    const properties = await Property.find(filter)
+      .sort({ createdAt: sortOrder })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    res.status(200).json({
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+      data: properties,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching properties", error });
+    res.status(500).json({ message: "Error fetching properties", error: error.message });
   }
 }
+
 export async function getPropertyById(req, res) {
   try {
     const propertyId = req.params.id;

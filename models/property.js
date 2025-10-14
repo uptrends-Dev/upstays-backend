@@ -18,7 +18,7 @@ const propertySchema = new mongoose.Schema(
       address: { type: String, required: true },
     },
     description: { type: String, required: true },
-    tags: {
+    tag: {
       type: String,
       enum: ["shortTerm", "longTerm", "forSale"],
       required: true,

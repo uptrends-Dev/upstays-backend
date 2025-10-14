@@ -65,7 +65,7 @@ async function loginUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      // domain: ".vercel.app",
+      domain: ".vercel.app",
     });
     res
       .status(200)
@@ -81,7 +81,7 @@ async function logoutUser(req, res) {
     res.clearCookie("token", {
       secure: true,
       sameSite: "lax",
-      // domain: ".vercel.app",
+      domain: ".vercel.app",
     });
     res.status(204).end();
   } catch (error) {
