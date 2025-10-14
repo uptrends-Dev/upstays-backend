@@ -17,4 +17,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/property", propertyRoutes);
 
+const Port = process.env.PORT || 3001;
+
+app.listen(Port, () => {
+  console.log(`server is running on port ${Port}`);
+});
+
 export default app;
