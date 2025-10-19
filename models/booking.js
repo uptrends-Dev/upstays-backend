@@ -12,11 +12,8 @@ const bookingSchema = new mongoose.Schema(
       lastName: { type: String, required: true, trim: true },
       email: { type: String, required: true, trim: true },
       phone: { type: String, required: true, trim: true },
+      preferredDate:{type:Date , required:true},
       message: { type: String, trim: true }, // لا داعي لجعل message حقلًا مطلوبًا
-    },
-    bookingDate: {
-      type: Date,
-      default: Date.now,
     },
     pending: { type: Boolean, default: true },
   },
