@@ -35,7 +35,6 @@ export async function getAllProperties(req, res) {
         filter["propertyPricing.priceValue"] = { $gte: min, $lte: max };
       }
     }
-
     // Filter by tag
     if (tag) {
       filter.tag = tag;
@@ -45,6 +44,7 @@ export async function getAllProperties(req, res) {
       .sort({ createdAt: sortOrder })
       .skip(skip)
       .limit(limit)
+      .select('title tag propertyImages location propertyPricing')
       .lean();
 
     res.status(200).json({

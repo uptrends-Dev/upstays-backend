@@ -6,7 +6,7 @@ import databaseConnection from "../config/databaseConnection.js";
 import authRoutes from "../routes/authRoutes.js";
 import userRoutes from "../routes/userRoutes.js";
 import propertyRoutes from "../routes/propertyRoutes.js";
-
+import bookingRoutes from "../routes/bookingRoutes.js"
 const app = express();
 
 const whitelist = [
@@ -33,6 +33,7 @@ databaseConnection();
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/property", propertyRoutes);
+app.use("/api/bookings" , bookingRoutes)
 
 const Port = process.env.PORT || 3001;
 app.listen(Port, () => {
@@ -40,10 +41,3 @@ app.listen(Port, () => {
 });
 
 export default app;
-
-// Vercel will call this handler for each request. We export a compatible handler.
-// @vercel/node will accept a default export that is a function (req,res) —
-// but we can reuse the Express app by forwarding requests to it.
-// export default function handler(req, res) {
-//   return app(req, res);
-// }
