@@ -7,6 +7,7 @@ import authRoutes from "../routes/authRoutes.js";
 import userRoutes from "../routes/userRoutes.js";
 import propertyRoutes from "../routes/propertyRoutes.js";
 import bookingRoutes from "../routes/bookingRoutes.js"
+import listYourPropertyRoutes from "../routes/listYourPropertyRoutes.js"
 const app = express();
 
 const whitelist = [
@@ -34,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/property", propertyRoutes);
 app.use("/api/bookings" , bookingRoutes)
+app.use("/api/listYourPropertyRoutes" , listYourPropertyRoutes)
 
 const Port = process.env.PORT || 3001;
 app.listen(Port, () => {
