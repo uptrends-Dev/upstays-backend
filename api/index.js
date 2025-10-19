@@ -8,6 +8,7 @@ import userRoutes from "../routes/userRoutes.js";
 import propertyRoutes from "../routes/propertyRoutes.js";
 import bookingRoutes from "../routes/bookingRoutes.js"
 import listYourPropertyRoutes from "../routes/listYourPropertyRoutes.js"
+import contactUsRoutes from "../routes/contactUsRoutes.js"
 const app = express();
 
 const whitelist = [
@@ -35,7 +36,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/property", propertyRoutes);
 app.use("/api/bookings" , bookingRoutes)
-app.use("/api/listYourPropertyRoutes" , listYourPropertyRoutes)
+app.use("/api/listYourProperty" , listYourPropertyRoutes)
+app.use("/api/contactUs" , contactUsRoutes)
 
 const Port = process.env.PORT || 3001;
 app.listen(Port, () => {

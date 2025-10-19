@@ -23,7 +23,7 @@ const listYourPropertySchema = new mongoose.Schema({
       message: "At least 1 images are required",
     },
   },
-});
+},{ timestamps: true });
 const ListYourProperty = mongoose.model(
   "ListYourProperty",
   listYourPropertySchema

@@ -51,7 +51,7 @@ export async function getAllOwnerSubmission(req, res) {
 }
 
 // الحصول على عقار حسب ID
-export async function getAllOwnerSubmissionById(req, res) {
+export async function getOwnerSubmissionById(req, res) {
   try {
     const propertyId = req.params.id;
     const property = await ListYourProperty.findById(propertyId);

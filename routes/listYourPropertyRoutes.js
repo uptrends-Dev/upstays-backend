@@ -3,7 +3,7 @@ const router = express.Router()
 import {
   createOwnerSubmission,
   getAllOwnerSubmission,
-  getAllOwnerSubmissionById,
+  getOwnerSubmissionById,
   deleteOwnerSubmission,
 } from "../controllers/listYourPropertyController.js";
 
@@ -17,10 +17,10 @@ router.get(
   getAllOwnerSubmission
 );
 router.get(
-  "/getAllOwnerSubmissionById/:id",
+  "/getOwnerSubmissionById/:id",
   verifyToken,
   allowedTo("SUPER_ADMIN", "ADMIN"),
-  getAllOwnerSubmissionById
+  getOwnerSubmissionById
 );
 router.delete(
   "/deleteOwnerSubmission/:id",
