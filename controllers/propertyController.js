@@ -28,7 +28,7 @@ export async function getAllProperties(req, res) {
       filter["location.city"] = locationRegex;
     }
 
-      // Filter by price range
+    // Filter by price range
     if (priceRange) {
       const [min, max] = priceRange.split("-").map(Number);
       if (!isNaN(min) && !isNaN(max)) {
@@ -44,7 +44,7 @@ export async function getAllProperties(req, res) {
       .sort({ createdAt: sortOrder })
       .skip(skip)
       .limit(limit)
-      .select('title tag propertyImages location propertyPricing')
+      .select("title tag propertyImages location propertyPricing")
       .lean();
 
     res.status(200).json({
@@ -56,7 +56,9 @@ export async function getAllProperties(req, res) {
       data: properties,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching properties", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching properties", error: error.message });
   }
 }
 
@@ -72,6 +74,7 @@ export async function getPropertyById(req, res) {
     res.status(500).json({ message: "Error fetching property", error });
   }
 }
+
 export async function updateProperty(req, res) {
   try {
     const propertyId = req.params.id;
@@ -79,6 +82,20 @@ export async function updateProperty(req, res) {
     const property = await Property.findByIdAndUpdate(propertyId, updatedData, {
       new: true,
     });
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating property", error });
+  }
+}
+export async function updateAchtiveProperty(req, res) {
+  try {
+    const propertyId = req.params.id;
+    const property = await Property.findById(propertyId);
+    property.isActive = !property.isActive;
+    property.save();
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }

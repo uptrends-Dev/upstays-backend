@@ -6,6 +6,7 @@ import {
   getPropertyById,
   updateProperty,
   deleteProperty,
+  updateAchtiveProperty
 } from "../controllers/propertyController.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import allowedTo from "../middlewares/allowedTo.js";
@@ -22,6 +23,12 @@ router.put(
   verifyToken,
   allowedTo("SUPER_ADMIN", "ADMIN"),
   updateProperty
+);
+router.patch(
+  "/updateAchtiveProperty/:id",
+  verifyToken,
+  allowedTo("SUPER_ADMIN", "ADMIN"),
+  updateAchtiveProperty
 );
 router.delete(
   "/deleteProperty/:id",
