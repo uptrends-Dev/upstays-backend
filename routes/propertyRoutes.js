@@ -24,10 +24,10 @@ router.put(
   allowedTo("SUPER_ADMIN", "ADMIN"),
   updateProperty
 );
-router.patch(
+router.put(
   "/updateAchtiveProperty/:id",
-  // verifyToken,
-  // allowedTo("SUPER_ADMIN", "ADMIN"),
+  verifyToken,
+  allowedTo("SUPER_ADMIN", "ADMIN"),
   updateAchtiveProperty
 );
 router.delete(
