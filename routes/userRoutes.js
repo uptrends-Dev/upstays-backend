@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { getAllUsers, updateUser, deleteUser, getUserById } from '../controllers/userController.js';
+import { getAllUsers, deleteUser, getUserById, updateUser } from '../controllers/userController.js';
 import verifyToken from '../middlewares/verifyToken.js';
 import allowedTo from "../middlewares/allowedTo.js";
 router.get('/getAllUsers', verifyToken, allowedTo("SUPER_ADMIN", "ADMIN"), getAllUsers);

@@ -18,7 +18,7 @@ async function getUserById(req, res) {
   }
 }
 
-export async function updateUser(req, res) {
+async function updateUser(req, res) {
   const { id } = req.params;
 
   // Never allow password here; also strip immutable/system fields
