@@ -45,8 +45,12 @@ const propertySchema = new mongoose.Schema(
       priceDetails: { type: String, required: false },
       currency: { type: String, enum: ["USD", "EUR", "EGP"], required: true },
     },
-    favorate:{type:Boolean , default : false},
+    favorate: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
+    owner: {
+      name: String,
+      phone: String,
+    }
   },
   { timestamps: true }
 );
