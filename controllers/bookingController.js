@@ -57,7 +57,12 @@ export async function getbookingById(req, res) {
   try {
     const BookingId = req.params.id;
     const booking = await Booking.findById(BookingId)
-      .populate({ path: "properties", select: "title propertyImages" })
+      .populate({
+        path: "propertyInfo",
+        // slice the array to the first element
+        select: { title: 1, propertyImages: { $slice: 1 } },
+        options: { lean: true },
+      })
       .lean();
     if (!booking) {
       return res.status(404).json({ message: "Booking not found with the given ID" });
