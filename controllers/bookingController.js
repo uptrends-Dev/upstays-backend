@@ -22,13 +22,23 @@ export async function getAllBookings(req, res) {
     const skip = (page - 1) * limit;
     const sortOrder = req.query.sort === "asc" ? 1 : -1;
     const total = await Booking.countDocuments();
-    
-    const bookings = await Booking
-      .find()
+
+    const bookings = await Booking.find()
       .sort({ createdAt: sortOrder })
       .skip(skip)
       .limit(limit)
+      .populate({
+        path: "propertyInfo",
+        // slice the array to the first element
+        select: { title: 1, propertyImages: { $slice: 1 } },
+        options: { lean: true },
+      })
       .lean();
+
+    // const data = bookings.map((v) => {
+    //   v.propertyInfo.propertyImages = v.propertyInfo.propertyImages
+    //   return v
+    // })
 
     res.status(200).json({
       limit,
@@ -46,7 +56,9 @@ export async function getAllBookings(req, res) {
 export async function getbookingById(req, res) {
   try {
     const BookingId = req.params.id;
-    const booking = await Booking.findById(BookingId);
+    const booking = await Booking.findById(BookingId)
+      .populate({ path: "properties", select: "title propertyImages" })
+      .lean();
     if (!booking) {
       return res.status(404).json({ message: "Booking not found with the given ID" });
     }
