@@ -25,6 +25,12 @@ router.get(
   allowedTo("SUPER_ADMIN", "ADMIN"),
   getbookingById
 );
+// router.patch(
+//   "/changestatus/:id",
+//   verifyToken,
+//   allowedTo("SUPER_ADMIN", "ADMIN"),
+//   changestatus
+// );
 router.delete(
   "/deleteBooking/:id",
   verifyToken,
