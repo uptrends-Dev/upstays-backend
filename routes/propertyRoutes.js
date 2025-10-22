@@ -24,7 +24,7 @@ router.put(
   allowedTo("SUPER_ADMIN", "ADMIN"),
   updateProperty
 );
-router.put(
+router.patch(
   "/updateAchtiveProperty/:id",
   verifyToken,
   allowedTo("SUPER_ADMIN", "ADMIN"),
