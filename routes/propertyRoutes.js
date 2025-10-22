@@ -26,8 +26,8 @@ router.put(
 );
 router.patch(
   "/updateAchtiveProperty/:id",
-  verifyToken,
-  allowedTo("SUPER_ADMIN", "ADMIN"),
+  // verifyToken,
+  // allowedTo("SUPER_ADMIN", "ADMIN"),
   updateAchtiveProperty
 );
 router.delete(
