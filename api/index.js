@@ -20,7 +20,7 @@ const corsOptions = {
     if (!origin || whitelist.includes(origin)) return cb(null, true);
     return cb(new Error("Not allowed by CORS"));
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
@@ -35,9 +35,9 @@ databaseConnection();
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/property", propertyRoutes);
-app.use("/api/bookings" , bookingRoutes)
-app.use("/api/listYourProperty" , listYourPropertyRoutes)
-app.use("/api/contactUs" , contactUsRoutes)
+app.use("/api/bookings", bookingRoutes)
+app.use("/api/listYourProperty", listYourPropertyRoutes)
+app.use("/api/contactUs", contactUsRoutes)
 
 const Port = process.env.PORT || 3001;
 app.listen(Port, () => {
