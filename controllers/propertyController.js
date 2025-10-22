@@ -44,7 +44,7 @@ export async function getAllProperties(req, res) {
       .sort({ createdAt: sortOrder })
       .skip(skip)
       .limit(limit)
-      .select("title tag propertyImages location propertyPricing")
+      .select("title tag propertyImages location propertyPricing isActive")
       .lean();
 
     res.status(200).json({
