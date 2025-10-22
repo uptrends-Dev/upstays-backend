@@ -5,6 +5,7 @@ import {
   getAllBookings,
   getbookingById,
   deleteBooking,
+  // changestatus
 } from "../controllers/bookingController.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import allowedTo from "../middlewares/allowedTo.js";

@@ -65,7 +65,9 @@ export async function getbookingById(req, res) {
       })
       .lean();
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found with the given ID" });
+      return res
+        .status(404)
+        .json({ message: "Booking not found with the given ID" });
     }
     res.status(200).json(booking);
   } catch (error) {
@@ -79,11 +81,46 @@ export async function deleteBooking(req, res) {
     const BookingId = req.params.id;
     const booking = await Booking.findByIdAndDelete(BookingId);
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found with the given ID" });
+      return res
+        .status(404)
+        .json({ message: "Booking not found with the given ID" });
     }
     res.status(200).json({ message: "Booking deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error deleting booking", error });
+  }
+}
+export async function changestatus(req, res) {
+  try {
+    const BookingId = req.params.id;
+    const booking = await Booking.findById(BookingId);
+
+    if (!booking) {
+      return res.status(404).json({
+        message: "Booking not found",
+      });
+    }
+
+    if (booking.pending === true) {
+      booking.pending = false;
+      await booking.save();
+
+      return res.status(200).json({
+        message: "Booking status updated to false",
+        booking,
+      });
+    }
+
+    return res.status(400).json({
+      message: "Booking already confirmed; cannot change status again",
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Error toggling status",
+      error: error.message,
+    });
   }
 }
