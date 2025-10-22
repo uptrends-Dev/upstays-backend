@@ -2,8 +2,17 @@ import User from "../models/user.js";
 
 async function getAllUsers(req, res) {
   try {
-    const users = await User.find({} , { password: 0, __v: 0 });
+    const users = await User.find({}, { password: 0, __v: 0 });
     res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+async function getUserById(req, res) {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId, { password: 0, __v: 0 });
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -46,4 +55,4 @@ async function deleteUser(req, res) {
   }
 }
 
-export { getAllUsers, updateUser, deleteUser };
+export { getAllUsers, updateUser, deleteUser, getUserById };
