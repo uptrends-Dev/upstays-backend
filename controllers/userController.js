@@ -14,7 +14,7 @@ async function getUserById(req, res) {
     const user = await User.findById(userId, { password: 0, __v: 0 });
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "error at getting user" });
   }
 }
 
