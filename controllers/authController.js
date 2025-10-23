@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import Session from "../models/session.js";
 async function registerUser(req, res) {
   const {
     username,
@@ -59,8 +59,17 @@ async function loginUser(req, res) {
     }
     const token = jwt.sign(
       { id: loginUser._id, role: loginUser.role },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
+
+    await Session.create({
+      userId: loginUser._id,
+      token,
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000),
+      isActive: true,
+    });
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
@@ -76,14 +85,22 @@ async function loginUser(req, res) {
       .json({ message: "User login failed", error: error.message });
   }
 }
+
 async function logoutUser(req, res) {
   try {
+    let authHeader =
+      req.headers["authorization"] || req.headers["Authorization"];
+    let token = authHeader && authHeader.split(" ")[1];
+
+    if (token) {
+      await Session.findOneAndDelete({ token });
+    }
     res.clearCookie("token", {
       secure: true,
       sameSite: "lax",
       domain: ".vercel.app",
     });
-    res.status(204).end();
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ message: "Logout failed", error: error.message });
   }
