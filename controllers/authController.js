@@ -74,7 +74,7 @@ async function loginUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".vercel.app",
+      // domain: ".vercel.app",
     });
     res
       .status(200)
