@@ -19,11 +19,11 @@ const listYourPropertySchema = new mongoose.Schema({
     type: [String],
     required: true,
     validate: {
-      validator: (v) => Array.isArray(v) && v.length >= 1,
-      message: "At least 1 images are required",
+      validator: (v) => Array.isArray(v) && v.length <= 2,
+      message: "At most 2 images are required",
     },
   },
-},{ timestamps: true });
+}, { timestamps: true });
 const ListYourProperty = mongoose.model(
   "ListYourProperty",
   listYourPropertySchema

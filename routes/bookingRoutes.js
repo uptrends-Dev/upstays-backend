@@ -5,6 +5,7 @@ import {
   getAllBookings,
   getbookingById,
   deleteBooking,
+  changestatus,
   // changestatus
 } from "../controllers/bookingController.js";
 import verifyToken from "../middlewares/verifyToken.js";
@@ -26,12 +27,12 @@ router.get(
   allowedTo("SUPER_ADMIN", "ADMIN"),
   getbookingById
 );
-// router.patch(
-//   "/changestatus/:id",
-//   verifyToken,
-//   allowedTo("SUPER_ADMIN", "ADMIN"),
-//   changestatus
-// );
+router.patch(
+  "/changestatus/:id",
+  verifyToken,
+  allowedTo("SUPER_ADMIN", "ADMIN"),
+  changestatus
+);
 router.delete(
   "/deleteBooking/:id",
   verifyToken,
