@@ -74,9 +74,10 @@ async function loginUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".vercel.app",
-      path: "/",
+      // domain: ".vercel.app",
+      // path: "/",
     });
+
     res
       .status(200)
       .json({ message: "User logged in successfully", user: loginUser, token });
@@ -96,6 +97,7 @@ async function logoutUser(req, res) {
     if (token) {
       await Session.findOneAndDelete({ token });
     }
+    
     res.clearCookie("token", {
       secure: true,
       sameSite: "lax",

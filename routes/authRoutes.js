@@ -6,5 +6,5 @@ import allowedTo from "../middlewares/allowedTo.js";
 // router.post('/register' , verifyToken , allowedTo("SUPER_ADMIN"), registerUser);
 router.post('/register' , registerUser);
 router.post('/login' , loginUser);
-router.post('/logout' , verifyToken , logoutUser);
+router.post('/logout' ,  logoutUser);
 export default router;
