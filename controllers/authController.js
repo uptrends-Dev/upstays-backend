@@ -108,5 +108,22 @@ async function logoutUser(req, res) {
     res.status(500).json({ message: "Logout failed", error: error.message });
   }
 }
+// controllers/user.controller.js
+async function getMe(req, res) {
+  // req.user set by requireAuth
+  res.json({
+    id: req.user._id,
+    username: req.user.username,
+    email: req.user.email,
+    role: req.user.role,
+    isActive: req.user.isActive,
+    profilePicture: req.user.profilePicture,
+    bio: req.user.bio,
+    phoneNumber: req.user.phoneNumber,
+    address: req.user.address,
+    createdAt: req.user.createdAt,
+    lastLogin: req.user.lastLogin,
+  });
+}
 
-export { registerUser, loginUser, logoutUser };
+export { registerUser, loginUser, logoutUser,getMe };

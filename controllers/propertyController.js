@@ -22,7 +22,6 @@ export async function getAllProperties(req, res) {
     let filter = {};
 
     // Filter by location (country, city, or address)
-     // country AND city if both provided; otherwise whichever exists
     if (country) {
       filter["location.country"] = { $regex: String(country), $options: "i" };
     }

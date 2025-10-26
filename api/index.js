@@ -9,6 +9,7 @@ import propertyRoutes from "../routes/propertyRoutes.js";
 import bookingRoutes from "../routes/bookingRoutes.js"
 import listYourPropertyRoutes from "../routes/listYourPropertyRoutes.js"
 import contactUsRoutes from "../routes/contactUsRoutes.js"
+
 const app = express();
 
 const whitelist = [
