@@ -117,3 +117,33 @@ export async function deleteProperty(req, res) {
     res.status(500).json({ message: "Error deleting property", error });
   }
 }
+export async function getLocation(req, res) {
+  try {
+    const [doc] = await Property.aggregate([
+      {
+        $group: {
+          _id: null,
+          countries: { $addToSet: "$location.country" },
+          cities: { $addToSet: "$location.city" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          countries: { $sortArray: { input: "$countries", sortBy: 1 } },
+          cities: { $sortArray: { input: "$cities", sortBy: 1 } },
+        },
+      },
+    ]);
+
+    const payload = [
+      { key: "country", values: doc?.countries ?? [] },
+      { key: "city", values: doc?.cities ?? [] },
+    ];
+    return res.status(200).json(payload);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error aggregating locations", error: error.message });
+  }
+}

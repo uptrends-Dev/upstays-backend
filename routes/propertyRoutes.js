@@ -6,7 +6,8 @@ import {
   getPropertyById,
   updateProperty,
   deleteProperty,
-  updateAchtiveProperty
+  updateAchtiveProperty,
+  getLocation
 } from "../controllers/propertyController.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import allowedTo from "../middlewares/allowedTo.js";
@@ -17,6 +18,7 @@ router.post(
   createProperty
 );
 router.get("/getAllProperties", getAllProperties);
+router.get("/getLocation", getLocation);
 router.get("/getPropertyById/:id", getPropertyById);
 router.put(
   "/updateProperty/:id",
