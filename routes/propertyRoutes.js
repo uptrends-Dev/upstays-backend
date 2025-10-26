@@ -7,7 +7,7 @@ import {
   updateProperty,
   deleteProperty,
   updateAchtiveProperty,
-  getLocation
+  getLocation,
 } from "../controllers/propertyController.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import allowedTo from "../middlewares/allowedTo.js";

@@ -13,7 +13,7 @@ export async function createProperty(req, res) {
   }
 }
 export async function getAllProperties(req, res) {
-  const { location, priceRange, tag } = req.query;
+  const { country,city, priceRange, tag } = req.query;
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -22,10 +22,12 @@ export async function getAllProperties(req, res) {
     let filter = {};
 
     // Filter by location (country, city, or address)
-    if (location) {
-      const locationRegex = { $regex: location, $options: "i" };
-      filter["location.country"] = locationRegex;
-      filter["location.city"] = locationRegex;
+     // country AND city if both provided; otherwise whichever exists
+    if (country) {
+      filter["location.country"] = { $regex: String(country), $options: "i" };
+    }
+    if (city) {
+      filter["location.city"] = { $regex: String(city), $options: "i" };
     }
 
     // Filter by price range
@@ -135,15 +137,8 @@ export async function getLocation(req, res) {
         },
       },
     ]);
-
-    const payload = [
-      { key: "country", values: doc?.countries ?? [] },
-      { key: "city", values: doc?.cities ?? [] },
-    ];
-    return res.status(200).json(payload);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error aggregating locations", error: error.message });
+    res.json({ countries: doc?.countries ?? [], cities: doc?.cities ?? [] });
+  } catch (e) {
+    res.status(500).json({ message: "Error aggregating locations", error: e.message });
   }
 }
